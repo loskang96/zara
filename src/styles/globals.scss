@@ -11,34 +11,53 @@ $white: #fff;
 $black: #000;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 
-  --primary: #246beb;
-  --secondary: #00ff00;
+    --primary: #246beb;
+    --secondary: #00ff00;
 
-  --gray-5: #f7f7f7;
-  --gray-10: #f0f0f0;
-  --gray-20: #e0e0e0;
-  --gray-30: #d0d0d0;
-  --gray-40: #c0c0c0;
-  --gray-50: #b0b0b0;
-  --gray-60: #a0a0a0;
-  --gray-70: #909090;
-  --gray-80: #808080;
-  --gray-90: #707070;
+    --gray-5: #f7f7f7;
+    --gray-10: #f0f0f0;
+    --gray-20: #e0e0e0;
+    --gray-30: #d0d0d0;
+    --gray-40: #c0c0c0;
+    --gray-50: #b0b0b0;
+    --gray-60: #a0a0a0;
+    --gray-70: #909090;
+    --gray-80: #808080;
+    --gray-90: #707070;
 
-  --hdHeight: 80px;
+    --hdHeight: 80px;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
+body,
+html {
+    color: var(--foreground);
+    background: var(--background);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.app-container {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+}
+
+.slider-container,
+.other-section {
+    scroll-snap-align: start;
+    width: 100vw;
+    height: 100vh;
 }

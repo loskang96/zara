@@ -1,61 +1,40 @@
-'use client';
-import { Box, Text, Flex, HStack, Link } from '@chakra-ui/react';
+import React from 'react';
+import { Box, Text, HStack, Link } from '@chakra-ui/react';
 
 export default function Footer() {
     return (
-        <Box
-            bg="white"
-            height="100vh"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            color="black"
-            textAlign="center"
-            px={4} // 좌우 여백 추가
-        >
-            {/* 뉴스레터 문구 */}
-            <Text fontSize={['lg', '2xl']} mb={6}>
+        <Box as="footer" py={10} textAlign="center" bg="gray.100" mt={10}>
+            <Text fontSize="lg" mb={4}>
                 뉴스레터에 가입하세요
             </Text>
-
-            {/* 소셜 미디어 링크 */}
-            <HStack
-                spacing={[3, 6]} // 모바일: 좁게, 데스크탑: 넓게
-                fontSize={['sm', 'md']} // 모바일: 작게, 데스크탑: 기본 크기
-                mb={6}
-                wrap="wrap" // 링크가 길어질 경우 줄바꿈
-                justify="center"
-            >
-                <Link href="#" _hover={{ textDecoration: 'underline' }}>
+            <HStack spacing={4} justifyContent="center" mb={4}>
+                <Link href="#" isExternal>
                     TIKTOK
                 </Link>
-                <Link href="#" _hover={{ textDecoration: 'underline' }}>
+                <Link href="#" isExternal>
                     INSTAGRAM
                 </Link>
-                <Link href="#" _hover={{ textDecoration: 'underline' }}>
+                <Link href="#" isExternal>
                     FACEBOOK
                 </Link>
-                <Link href="#" _hover={{ textDecoration: 'underline' }}>
+                <Link href="#" isExternal>
                     X
                 </Link>
-                <Link href="#" _hover={{ textDecoration: 'underline' }}>
+                <Link href="#" isExternal>
                     PINTEREST
                 </Link>
-                <Link href="#" _hover={{ textDecoration: 'underline' }}>
+                <Link href="#" isExternal>
                     KAKAO
                 </Link>
-                <Link href="#" _hover={{ textDecoration: 'underline' }}>
+                <Link href="#" isExternal>
                     YOUTUBE
                 </Link>
-                <Link href="#" _hover={{ textDecoration: 'underline' }}>
+                <Link href="#" isExternal>
                     SPOTIFY
                 </Link>
             </HStack>
-
-            {/* 추가 문구 */}
             <Text fontSize="sm" color="gray.500">
-                © 2024 Your Company. All rights reserved.
+                © 2024 KANGHANSOL. All rights reserved.
             </Text>
         </Box>
     );
