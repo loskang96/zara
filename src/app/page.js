@@ -1,16 +1,15 @@
+// app/page.js
 'use client';
 
-import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/header/Header';
 import ImageSlider from '@/components/ImageSlider';
-import '../styles/globals.scss';
-import '../styles/_swiper.scss';
+import Footer from '@/components/layout/Footer';
 
 export default function Page() {
     return (
-        <div className="page-wrapper">
+        <div className="relative w-full">
             <Header />
-            <main className="main-container">
+            <main>
                 <ImageSlider />
             </main>
             <Footer />

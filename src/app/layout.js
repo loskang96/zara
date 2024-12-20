@@ -25,23 +25,13 @@ export const metadata = {
     },
 };
 
+// app/layout.js
+import '../styles/globals.scss'; // 전역 스타일은 여기서 import
+
 export default function RootLayout({ children }) {
     return (
         <html lang="ko">
-            <head>
-                <link
-                    rel="stylesheet"
-                    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-                />
-            </head>
-            <body>
-                <Providers>
-                    <SkipNav />
-                    <div id="wrap" className="min-h-svh flex flex-col">
-                        {children}
-                    </div>
-                </Providers>
-            </body>
+            <body>{children}</body>
         </html>
     );
 }

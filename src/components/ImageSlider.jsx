@@ -3,9 +3,6 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
-import { Box } from '@chakra-ui/react';
-import '../styles/_swiper.scss'; // 슬라이더 스타일
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,37 +14,51 @@ const images = [
     '/images/pattern/main/5.jpg',
 ];
 
-const ImageSlider = () => {
+export default function ImageSlider() {
     const sliderRef = useRef(null);
 
     useEffect(() => {
-        const slides = sliderRef.current.children;
+        const slides = sliderRef.current.querySelectorAll('.slide');
 
-        gsap.utils.toArray(slides).forEach((slide, index) => {
-            gsap.timeline({
+        slides.forEach((slide, index) => {
+            const timeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: slide,
-                    start: 'top top',
-                    end: 'bottom top',
+                    start: 'top bottom', // 이미지가 화면 아래에 들어올 때
+                    end: 'bottom top', // 이미지가 화면 위로 나갈 때
                     scrub: true,
-                    pin: true,
-                    markers: false, // 디버깅을 위해 true로 설정 가능
+                    markers: false, // 디버깅용 스크롤 트리거 마커 비활성화
                 },
-            })
-                .fromTo(slide, { opacity: 0, scale: 1.2 }, { opacity: 1, scale: 1, duration: 1.5 })
-                .to(slide, { opacity: 0, scale: 0.8, duration: 1.5 });
+            });
+
+            // 등장 애니메이션
+            timeline.fromTo(
+                slide,
+                { scale: 0.8, opacity: 0 }, // 시작 상태
+                { scale: 1, opacity: 1, duration: 1.5, ease: 'power1.out' } // 화면에 꽉 차게
+            );
+
+            // 사라짐 애니메이션
+            timeline.to(slide, {
+                scale: 0.8, // 다시 축소
+                opacity: 0, // 투명해짐
+                duration: 1.5,
+                ease: 'power1.out',
+            });
         });
     }, []);
 
     return (
-        <Box ref={sliderRef} className="slider-container">
+        <section ref={sliderRef} className="w-full">
             {images.map((src, index) => (
-                <Box key={index} className="slide">
-                    <Image src={src} alt={`Slide ${index + 1}`} layout="fill" objectFit="cover" />
-                </Box>
+                <div
+                    key={index}
+                    className="slide h-screen bg-cover bg-center"
+                    style={{
+                        backgroundImage: `url(${src})`,
+                    }}
+                />
             ))}
-        </Box>
+        </section>
     );
-};
-
-export default ImageSlider;
+}
