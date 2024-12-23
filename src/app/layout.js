@@ -3,7 +3,7 @@ import { Providers } from '@/components/providers';
 import SkipNav from '@/components/layout/header/SkipNav';
 
 export const metadata = {
-    title: 'ZARA Kang HanSol/portpolio',
+    title: 'ZARA KANGHANSOL',
     description: '페이지 설명',
     openGraph: {
         title: '페이지 제목',
