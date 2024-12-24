@@ -8,11 +8,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const images = [
-    '/images/pattern/main/1.jpg',
     '/images/pattern/main/6.jpg',
+    '/images/pattern/main/5.jpg',
     '/images/pattern/main/7.jpg',
     '/images/pattern/main/8.jpg',
-    '/images/pattern/main/9.jpg',
+    '/images/pattern/main/1.jpg',
 ];
 
 export default function ImageSlider() {

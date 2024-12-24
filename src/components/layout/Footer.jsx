@@ -32,22 +32,22 @@ export default function Footer() {
             ref={footerRef}
             className="h-screen w-full bg-gray-100 flex flex-col items-center justify-center text-center"
         >
-            <h2 className="text-4xl font-bold mb-8">뉴스레터에 가입하세요</h2>
-            <div className="flex justify-center space-x-6 mb-8">
-                <a href="#" className="text-xl text-gray-600 hover:text-black">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8">뉴스레터에 가입하세요</h2>
+            <div className="flex justify-center space-x-4 md:space-x-5 lg:space-x-6 mb-8">
+                <a href="#" className="text-sm md:text-lg lg:text-xl text-gray-600 hover:text-black">
                     TIKTOK
                 </a>
-                <a href="#" className="text-xl text-gray-600 hover:text-black">
+                <a href="#" className="text-sm md:text-lg lg:text-xl text-gray-600 hover:text-black">
                     INSTAGRAM
                 </a>
-                <a href="#" className="text-xl text-gray-600 hover:text-black">
+                <a href="#" className="text-sm md:text-lg lg:text-xl text-gray-600 hover:text-black">
                     FACEBOOK
                 </a>
-                <a href="#" className="text-xl text-gray-600 hover:text-black">
+                <a href="#" className="text-sm md:text-lg lg:text-xl text-gray-600 hover:text-black">
                     YOUTUBE
                 </a>
             </div>
-            <p className="text-lg text-gray-500">© 2024 KANGHANSOL. All rights reserved.</p>
+            <p className="text-xs md:text-sm lg:text-lg text-gray-500">© 2024 KANGHANSOL. All rights reserved.</p>
         </footer>
     );
 }
