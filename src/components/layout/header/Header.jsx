@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
-import { MenuIcon, Search, User, ShoppingBag, Home } from 'lucide-react';
+import { Search, User, ShoppingBag, Home } from 'lucide-react';
 import Image from 'next/image';
 import Menu from '@/app/about/components/menu';
 
@@ -91,7 +91,10 @@ const Header = () => {
                 {/* Bottom Navigation Bar */}
                 <div className="w-full mt-auto">
                     <div className="flex items-center justify-between px-12 py-6 bg-black">
-                        <button className="flex items-center justify-center w-6">
+                        <button
+                            className="flex items-center justify-center w-6"
+                            onClick={() => (window.location.href = '/')}
+                        >
                             <Home className="w-[22px] h-[22px] text-white stroke-[1.25]" />
                         </button>
                         <button className="flex items-center justify-center w-6">
@@ -103,7 +106,10 @@ const Header = () => {
                         <button className="flex items-center justify-center w-6">
                             <ShoppingBag className="w-[22px] h-[22px] text-white stroke-[1.25]" />
                         </button>
-                        <button className="flex items-center justify-center w-6">
+                        <button
+                            onClick={() => (window.location.href = '/login')}
+                            className="flex items-center justify-center w-6"
+                        >
                             <User className="w-[22px] h-[22px] text-white stroke-[1.25]" />
                         </button>
                     </div>

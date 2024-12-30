@@ -27,10 +27,6 @@ const desktopImages = [
         src: '/images/pattern/main/5.jpg',
         url: '/page5',
     },
-    {
-        src: '/images/pattern/main/6.jpg',
-        url: '/page6',
-    },
 ];
 
 const mobileImages = [

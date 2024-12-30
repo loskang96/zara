@@ -1,107 +1,76 @@
 'use client';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { X, MessageSquare, Settings } from 'lucide-react';
 
-import Logo from "@/components/common/Logo";
-import Checkbox from "@/components/form/Checkbox";
-import FormInput from "@/components/form/FormInput";
-import Button from "@/components/button/Button";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
+const Login = () => {
+    const router = useRouter();
 
-export default function LoginPage() {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // 로그인 로직 구현
-  };
-
-  return (
-    <>
-      <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <Logo size={8} />
-          <h2 className="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <FormInput 
-                id="email" 
-                label="Email address" 
-                type="email" 
-                autoComplete="email"
-                required
-                validateOnSubmit
-                helperText="이메일 주소를 입력해주세요"
-              />
-              
-              <FormInput 
-                id="password" 
-                label="Password" 
-                type="password" 
-                autoComplete="current-password"
-                required
-                validateOnSubmit
-                helperText="비밀번호를 입력해주세요"
-              />
-
-              <div className="flex items-center justify-between">
-                <Checkbox id="remember-me" label="Remember me" />
-
-                <div className="text-sm/6">
-                  <Button 
-                    href="/signup" 
-                    type="ghost" 
-                    className="px-0 text-indigo-600"
-                  >
-                    비밀번호를 잊으셨나요?
-                  </Button>
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-white">
+            <div className="w-full max-w-md">
+                {/* Close Icon */}
+                <div className="flex justify-between items-center mb-4">
+                    <button className="text-gray-500 hover:text-black" onClick={() => router.push('/')}>
+                        <X className="w-6 h-6" />
+                    </button>
+                    <div className="flex items-center space-x-4">
+                        <button className="text-gray-500 hover:text-black">
+                            <MessageSquare className="w-6 h-6" />
+                        </button>
+                        <button className="text-gray-500 hover:text-black">
+                            <Settings className="w-6 h-6" />
+                        </button>
+                    </div>
                 </div>
-              </div>
 
-              <div>
-                <Button type="solid" className="w-full">
-                  로그인
-                </Button>
-              </div>
-            </form>
+                {/* Title */}
+                <h1 className="text-lg font-medium mb-6 text-center">고객님의 계정에 액세스하세요</h1>
 
-            <div>
-              <div className="relative mt-10">
-                <div 
-                  aria-hidden="true" 
-                  className="absolute inset-0 flex items-center"
+                {/* Email Input */}
+                <input
+                    type="email"
+                    placeholder="이메일"
+                    className="w-full px-4 py-3 mb-4 border-b border-gray-400 focus:outline-none focus:border-black"
+                />
+
+                {/* Password Input */}
+                <input
+                    type="password"
+                    placeholder="비밀번호"
+                    className="w-full px-4 py-3 mb-6 border-b border-gray-400 focus:outline-none focus:border-black"
+                />
+
+                {/* Login Button */}
+                <button
+                    className="w-full px-4 py-3 mb-4 text-black border border-black rounded hover:bg-gray-100"
+                    onClick={() => router.push('/auth/login')}
                 >
-                  <div className="w-full border-t border-gray-200" />
+                    로그인
+                </button>
+
+                {/* Forgot Password */}
+                <div className="text-center mb-6">
+                    <a href="#" className="text-sm text-gray-500 hover:underline">
+                        비밀번호를 잊으셨습니까?
+                    </a>
                 </div>
-                <div className="relative flex justify-center text-sm/6 font-medium">
-                  <span className="bg-white px-6 text-gray-900">
-                    Or continue with
-                  </span>
-                </div>
-              </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                <Button 
-                  type="outline" 
-                  icon={FcGoogle}
-                  onClick={() => {/* Google 로그인 로직 */}}
-                >
-                  Google
-                </Button>
-                <Button 
-                  type="outline" 
-                  icon={FaGithub}
-                  onClick={() => {/* GitHub 로그인 로직 */}}
-                >
-                  GitHub
-                </Button>
-              </div>
+                {/* Register Section */}
+                <div className="text-center">
+                    <p className="mb-4">계정이 필요하십니까?</p>
+                    <button className="w-full px-4 py-3 border border-black rounded hover:bg-gray-100">등록</button>
+                </div>
+
+                {/* Footer Link */}
+                <div className="mt-6 text-center">
+                    <a href="#" className="text-sm text-gray-500 hover:underline">
+                        지원 센터
+                    </a>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </>
-  );
-}
+    );
+};
+
+export default Login;
