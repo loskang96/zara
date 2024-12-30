@@ -1,9 +1,9 @@
+'use client';
 import React, { useState, useEffect, useCallback } from 'react';
-import { MenuIcon, Search, User, ShoppingBag } from 'lucide-react';
+import { MenuIcon, Search, User, ShoppingBag, Home } from 'lucide-react';
 import Image from 'next/image';
-import Menu from '@/app/about/components/menu'; // Import the menu component
+import Menu from '@/app/about/components/menu';
 
-// Custom hook for detecting background darkness
 const useBackgroundBrightness = () => {
     const [isBackgroundDark, setIsBackgroundDark] = useState(false);
 
@@ -17,18 +17,15 @@ const useBackgroundBrightness = () => {
 
         const parentStyle = window.getComputedStyle(parentElement);
 
-        // Get background colors
         const headerBg = computedStyle.backgroundColor;
         const parentBg = parentStyle.backgroundColor;
 
-        // Convert RGB to brightness value
         const getRGBValues = (color) => {
             const matches = color.match(/\d+/g);
             return matches ? matches.map(Number) : [255, 255, 255];
         };
 
         const calculateBrightness = (r, g, b) => {
-            // Using relative luminance formula
             return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
         };
 
@@ -38,7 +35,6 @@ const useBackgroundBrightness = () => {
         const headerBrightness = calculateBrightness(hr, hg, hb);
         const parentBrightness = calculateBrightness(pr, pg, pb);
 
-        // Use the darker brightness value
         const brightness = Math.min(headerBrightness, parentBrightness);
         setIsBackgroundDark(brightness < 0.5);
     }, []);
@@ -46,7 +42,6 @@ const useBackgroundBrightness = () => {
     useEffect(() => {
         checkBackgroundBrightness();
 
-        // Create observer for background changes
         const observer = new MutationObserver(checkBackgroundBrightness);
         const headerElement = document.querySelector('header');
 
@@ -58,7 +53,6 @@ const useBackgroundBrightness = () => {
             });
         }
 
-        // Check on scroll for sticky headers over different backgrounds
         window.addEventListener('scroll', checkBackgroundBrightness);
 
         return () => {
@@ -85,49 +79,46 @@ const Header = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Dynamic color classes based on background
     const textColor = isBackgroundDark ? 'text-white' : 'text-black';
     const iconColor = isBackgroundDark ? 'text-white' : 'text-black';
     const borderColor = isBackgroundDark ? 'border-white' : 'border-black';
     const placeholderColor = isBackgroundDark ? 'placeholder-white/70' : 'placeholder-black/70';
 
     return (
-        <header className="fixed top-0 left-0 w-full z-50">
-            {menuOpen && <Menu onClose={() => setMenuOpen(false)} />} {/* Render menu when open */}
+        <header className="fixed top-0 left-0 w-full h-full z-50">
+            {menuOpen && <Menu onClose={() => setMenuOpen(false)} />}
             {isMobile ? (
                 // Mobile & Tablet Header
-                <div className="w-full">
-                    <div className="max-w-[1920px] mx-auto px-4 py-3">
-                        <div className="flex items-center justify-between">
-                            {/* Left Section */}
-                            <div className="flex items-center gap-4">
-                                <button
-                                    onClick={() => setMenuOpen(!menuOpen)}
-                                    className={`${iconColor} hover:opacity-70`}
-                                >
-                                    <MenuIcon className="w-6 h-6" />
-                                </button>
-                                <Image
-                                    src="/images/pattern/main/zaralogowhite.svg"
-                                    alt="ZARA"
-                                    width={250}
-                                    height={80}
-                                    className={`${isBackgroundDark ? 'invert' : ''}`}
-                                />
-                            </div>
+                <div className="w-full h-full flex flex-col justify-between">
+                    {/* Top Logo Section */}
+                    <div className="w-full pt-8 px-4">
+                        <Image
+                            src="/images/pattern/main/zaralogowhite.svg"
+                            alt="ZARA"
+                            width={400}
+                            height={100}
+                            className={`w-full ${isBackgroundDark ? 'invert' : ''}`}
+                        />
+                    </div>
 
-                            {/* Right Section */}
-                            <div className="flex items-center gap-6">
-                                <button className={`${iconColor} hover:opacity-70`}>
-                                    <Search className="w-5 h-5" />
-                                </button>
-                                <button className={`${iconColor} hover:opacity-70`}>
-                                    <User className="w-5 h-5" />
-                                </button>
-                                <button className={`${iconColor} hover:opacity-70`}>
-                                    <ShoppingBag className="w-5 h-5" />
-                                </button>
-                            </div>
+                    {/* Bottom Navigation Bar */}
+                    <div className="w-full mt-auto">
+                        <div className="flex items-center justify-between px-12 py-6 bg-black">
+                            <button className="flex items-center justify-center w-6">
+                                <Home className="w-[22px] h-[22px] text-white stroke-[1.25]" />
+                            </button>
+                            <button className="flex items-center justify-center w-6">
+                                <Search className="w-[22px] h-[22px] text-white stroke-[1.25]" />
+                            </button>
+                            <button onClick={() => setMenuOpen(!menuOpen)} className="flex items-center justify-center">
+                                <span className="text-white text-sm font-light tracking-wide">메뉴</span>
+                            </button>
+                            <button className="flex items-center justify-center w-6">
+                                <ShoppingBag className="w-[22px] h-[22px] text-white stroke-[1.25]" />
+                            </button>
+                            <button className="flex items-center justify-center w-6">
+                                <User className="w-[22px] h-[22px] text-white stroke-[1.25]" />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -135,7 +126,6 @@ const Header = () => {
                 // Desktop Header
                 <div className="w-full">
                     <div className="relative">
-                        {/* Header Content */}
                         <div className="relative z-10">
                             {/* Top Bar */}
                             <div className={`flex justify-end p-4 ${textColor} space-x-4`}>
@@ -155,7 +145,7 @@ const Header = () => {
                                 </div>
                             </div>
 
-                            {/* Logo and Navigation */}
+                            {/* Logo and Menu Button */}
                             <div className="px-8 py-4">
                                 <div className="flex items-center">
                                     <button
