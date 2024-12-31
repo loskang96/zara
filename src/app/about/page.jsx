@@ -2,18 +2,12 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import Hero from './components/hero';
-// import Timeline from './components/timeline'
-// import LogoCloud from './components/logoCloud';
-import OurPeople from './components/ourPeople';
-import State from './components/state';
-import JoinUs from './components/joinUs';
 
 export default function AboutPage() {
     return (
         <>
             {/* Hero section */}
-            <Hero />
+            {/* <Hero /> */}
 
             {/* Timeline section */}
             {/* <Timeline /> */}
@@ -22,13 +16,13 @@ export default function AboutPage() {
             {/* <LogoCloud /> */}
 
             {/* Content section */}
-            <OurPeople />
+            {/* <OurPeople /> */}
 
             {/* Stats */}
-            <State />
+            {/* <State /> */}
 
             {/* Content section */}
-            <JoinUs />
+            {/* <JoinUs /> */}
         </>
     );
 }
