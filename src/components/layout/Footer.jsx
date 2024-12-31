@@ -51,18 +51,23 @@ export default function Footer({ onSearchOpen }) {
             </div>
 
             {/* 고정 네비게이션 */}
-            <div className="fixed bottom-0 left-0 w-full bg-black z-50">
-                <div className="flex items-center justify-between px-12 py-6">
+            <div
+                className="fixed bottom-0 left-0 w-full bg-black z-50"
+                style={{
+                    height: '64px', // 네비게이션 높이 고정
+                    display: 'flex',
+                    alignItems: 'center',
+                    boxSizing: 'border-box',
+                }}
+            >
+                <div className="flex items-center justify-between w-full px-12">
                     <button
                         className="flex items-center justify-center w-6"
                         onClick={() => (window.location.href = '/')}
                     >
                         <Home className="w-[22px] h-[22px] text-white stroke-[1.25]" />
                     </button>
-                    <button
-                        className="flex items-center justify-center w-6"
-                        onClick={onSearchOpen} // 검색 버튼 클릭 이벤트
-                    >
+                    <button className="flex items-center justify-center w-6" onClick={onSearchOpen}>
                         <Search className="w-[22px] h-[22px] text-white stroke-[1.25]" />
                     </button>
                     <button className="flex items-center justify-center w-6" onClick={() => alert('메뉴 열기')}>

@@ -67,7 +67,7 @@ const useBackgroundBrightness = () => {
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false); // 검색 상태 추가
+    const [searchOpen, setSearchOpen] = useState(false);
     const isBackgroundDark = useBackgroundBrightness();
 
     const handleSearchOpen = () => {
@@ -104,7 +104,7 @@ const Header = () => {
         <div className="relative">
             <header className="fixed top-0 left-0 w-full h-full z-50">
                 {menuOpen && <Menu onClose={() => setMenuOpen(false)} />}
-                {searchOpen && <SearchHeader onClose={handleSearchClose} />} {/* SearchHeader 추가 */}
+                {searchOpen && <SearchHeader onClose={handleSearchClose} />}
                 {/* Top Logo Section */}
                 <div className="absolute top-0 left-0 w-[60%] md:w-[50%] lg:w-[40%] h-auto">
                     <Image
@@ -120,8 +120,16 @@ const Header = () => {
             </header>
 
             {/* Fixed Bottom Navigation */}
-            <div className="fixed bottom-0 left-0 w-full bg-black z-50">
-                <div className="flex items-center justify-between px-12 py-6">
+            <div
+                className="fixed bottom-0 left-0 w-full bg-black z-50"
+                style={{
+                    height: '64px', // 네비게이션 높이를 고정
+                    display: 'flex',
+                    alignItems: 'center', // 중앙 정렬
+                    boxSizing: 'border-box', // 패딩 충돌 방지
+                }}
+            >
+                <div className="flex items-center justify-between w-full px-12">
                     <button
                         className="flex items-center justify-center w-6"
                         onClick={() => (window.location.href = '/')}
