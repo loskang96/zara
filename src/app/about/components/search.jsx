@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Search, MapPin, Barcode, Image } from 'lucide-react';
+import { Search, MapPin, Barcode } from 'lucide-react';
 import { Img } from '@chakra-ui/react';
 
 const SearchHeader = ({ onClose }) => {
@@ -25,7 +25,8 @@ const SearchHeader = ({ onClose }) => {
                 <div className="flex items-center gap-6">
                     <MapPin size={20} />
                     <Barcode size={20} />
-                    <image size={20} />
+                    {/* 수정된 부분 */}
+                    <Img src="/images/sample-icon.jpg" alt="Sample Icon" className="w-5 h-5" />
                 </div>
             </div>
 

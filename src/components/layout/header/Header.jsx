@@ -71,13 +71,17 @@ const Header = () => {
     const isBackgroundDark = useBackgroundBrightness();
 
     const handleSearchOpen = () => {
-        setSearchOpen(true);
-        window.history.pushState({ searchOpen: true }, 'search');
+        if (!searchOpen) {
+            setSearchOpen(true);
+            window.history.pushState({ searchOpen: true }, 'search');
+        }
     };
 
     const handleSearchClose = () => {
-        setSearchOpen(false);
-        window.history.back(); // 뒤로가기로 상태 복원
+        if (searchOpen) {
+            setSearchOpen(false);
+            window.history.back();
+        }
     };
 
     useEffect(() => {
@@ -96,13 +100,11 @@ const Header = () => {
         };
     }, []);
 
-    const textColor = isBackgroundDark ? 'text-white' : 'text-black';
-
     return (
-        <header className="fixed top-0 left-0 w-full h-full z-50">
-            {menuOpen && <Menu onClose={() => setMenuOpen(false)} />}
-            {searchOpen && <SearchHeader onClose={handleSearchClose} />} {/* SearchHeader 추가 */}
-            <div className="w-full h-full flex flex-col justify-between">
+        <div className="relative">
+            <header className="fixed top-0 left-0 w-full h-full z-50">
+                {menuOpen && <Menu onClose={() => setMenuOpen(false)} />}
+                {searchOpen && <SearchHeader onClose={handleSearchClose} />} {/* SearchHeader 추가 */}
                 {/* Top Logo Section */}
                 <div className="absolute top-0 left-0 w-[60%] md:w-[50%] lg:w-[40%] h-auto">
                     <Image
@@ -115,38 +117,35 @@ const Header = () => {
                         className={`${isBackgroundDark ? 'invert' : ''}`}
                     />
                 </div>
+            </header>
 
-                {/* Bottom Navigation Bar */}
-                <div className="w-full mt-auto">
-                    <div className="flex items-center justify-between px-12 py-6 bg-black">
-                        <button
-                            className="flex items-center justify-center w-6"
-                            onClick={() => (window.location.href = '/')}
-                        >
-                            <Home className="w-[22px] h-[22px] text-white stroke-[1.25]" />
-                        </button>
-                        <button
-                            className="flex items-center justify-center w-6"
-                            onClick={handleSearchOpen} // 검색 버튼 클릭 이벤트 추가
-                        >
-                            <Search className="w-[22px] h-[22px] text-white stroke-[1.25]" />
-                        </button>
-                        <button onClick={() => setMenuOpen(!menuOpen)} className="flex items-center justify-center">
-                            <span className="text-white text-sm font-light tracking-wide">메뉴</span>
-                        </button>
-                        <button className="flex items-center justify-center w-6">
-                            <ShoppingBag className="w-[22px] h-[22px] text-white stroke-[1.25]" />
-                        </button>
-                        <button
-                            onClick={() => (window.location.href = '/login')}
-                            className="flex items-center justify-center w-6"
-                        >
-                            <User className="w-[22px] h-[22px] text-white stroke-[1.25]" />
-                        </button>
-                    </div>
+            {/* Fixed Bottom Navigation */}
+            <div className="fixed bottom-0 left-0 w-full bg-black z-50">
+                <div className="flex items-center justify-between px-12 py-6">
+                    <button
+                        className="flex items-center justify-center w-6"
+                        onClick={() => (window.location.href = '/')}
+                    >
+                        <Home className="w-[22px] h-[22px] text-white stroke-[1.25]" />
+                    </button>
+                    <button className="flex items-center justify-center w-6" onClick={handleSearchOpen}>
+                        <Search className="w-[22px] h-[22px] text-white stroke-[1.25]" />
+                    </button>
+                    <button onClick={() => setMenuOpen(!menuOpen)} className="flex items-center justify-center">
+                        <span className="text-white text-sm font-light tracking-wide">메뉴</span>
+                    </button>
+                    <button className="flex items-center justify-center w-6">
+                        <ShoppingBag className="w-[22px] h-[22px] text-white stroke-[1.25]" />
+                    </button>
+                    <button
+                        onClick={() => (window.location.href = '/login')}
+                        className="flex items-center justify-center w-6"
+                    >
+                        <User className="w-[22px] h-[22px] text-white stroke-[1.25]" />
+                    </button>
                 </div>
             </div>
-        </header>
+        </div>
     );
 };
 
