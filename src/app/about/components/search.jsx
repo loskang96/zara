@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Search, MapPin, Barcode } from 'lucide-react';
+import { MapPin, Barcode } from 'lucide-react';
 import { Img } from '@chakra-ui/react';
 
 const SearchHeader = ({ onClose }) => {
@@ -18,115 +18,64 @@ const SearchHeader = ({ onClose }) => {
     ];
 
     return (
-        <div className="fixed inset-0 bg-white z-50">
+        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
             {/* Top Bar */}
-            <div className="px-4 py-2 flex items-center justify-between border-b">
-                <span className="text-sm">5:12</span>
-                <div className="flex items-center gap-6">
+            <div
+                className="fixed top-0 left-0 w-full z-50 flex justify-end py-2"
+                style={{
+                    backgroundColor: 'transparent', // 배경 투명 설정
+                    border: 'none', // 경계선 제거
+                }}
+            >
+                <div className="flex items-center gap-4 pr-4">
                     <MapPin size={20} />
                     <Barcode size={20} />
-                    {/* 수정된 부분 */}
                     <Img src="/images/sample-icon.jpg" alt="Sample Icon" className="w-5 h-5" />
                 </div>
             </div>
 
-            {/* Search Question */}
-            <div className="px-4 py-6">
-                <h1 className="text-xl font-normal">무엇을 찾으시나요?</h1>
-            </div>
+            {/* Main Content */}
+            <div className="pt-16 pb-16">
+                {/* Search Question */}
+                <div className="py-6">
+                    <h1 className="text-xl font-normal">무엇을 찾으시나요?</h1>
+                </div>
 
-            {/* Categories */}
-            <div className="px-4 overflow-x-auto">
-                <div className="flex gap-2 pb-4">
-                    {categories.map((category, index) => (
-                        <button
-                            key={index}
-                            className="px-3 py-1.5 border border-gray-200 rounded-md text-sm whitespace-nowrap hover:border-gray-400 transition-colors"
-                        >
-                            {category}
-                        </button>
+                {/* Categories */}
+                <div className="overflow-x-auto">
+                    <div className="flex gap-2 pb-4">
+                        {categories.map((category, index) => (
+                            <button
+                                key={index}
+                                className="px-3 py-1.5 border border-gray-200 rounded-md text-sm whitespace-nowrap hover:border-gray-400 transition-colors"
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Recommended Items */}
+                <div className="py-3">
+                    <h2 className="text-sm text-gray-600">추천 아이템</h2>
+                </div>
+
+                {/* Product Grid */}
+                <div className="grid grid-cols-2 gap-0">
+                    {[...Array(12).keys()].map((_, index) => (
+                        <div key={index} className="border">
+                            <div className="aspect-square relative">
+                                <Img
+                                    src={`/images/products/product-${index + 1}.jpg`}
+                                    alt={`Product ${index + 1}`}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <h3 className="text-sm text-center">Product {index + 1}</h3>
+                            <p className="text-sm text-center">₩{(index + 1) * 10000}</p>
+                        </div>
                     ))}
                 </div>
-            </div>
-
-            {/* Recommended Items Text */}
-            <div className="px-4 py-3 border-t">
-                <h2 className="text-sm text-gray-600">추천 아이템</h2>
-            </div>
-
-            {/* Product Grid */}
-            <div className="grid grid-cols-2">
-                <div className="p-4 border-r border-b relative">
-                    <div className="aspect-square mb-4 relative">
-                        <Img
-                            src="/images/products/black-flap.jpg"
-                            alt="락 플랩 숄더백"
-                            className="w-full h-full object-cover"
-                        />
-                        <button className="absolute bottom-4 right-4 w-8 h-8 flex items-center justify-center">
-                            <span className="text-2xl">+</span>
-                        </button>
-                    </div>
-                    <div className="space-y-1">
-                        <h3 className="text-sm">락 플랩 숄더백</h3>
-                        <p className="text-sm">₩ 59,900</p>
-                    </div>
-                    <button className="absolute top-4 right-4">
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                        >
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div className="p-4 border-b relative">
-                    <div className="aspect-square mb-4">
-                        <Img
-                            src="/images/products/bucket-bag.jpg"
-                            alt="버킷백"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                    <div className="space-y-1">
-                        <h3 className="text-sm">버킷백</h3>
-                        <p className="text-sm">₩ 59,900</p>
-                    </div>
-                    <button className="absolute top-4 right-4">
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                        >
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            {/* Keyboard Button */}
-            <div className="fixed bottom-0 left-0 right-0 flex justify-center pb-8 pt-4 bg-gradient-to-t from-white to-transparent">
-                <button className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
-                        <path d="M6 8h.01"></path>
-                        <path d="M10 8h.01"></path>
-                        <path d="M14 8h.01"></path>
-                        <path d="M18 8h.01"></path>
-                        <path d="M6 12h.01"></path>
-                        <path d="M10 12h.01"></path>
-                        <path d="M14 12h.01"></path>
-                        <path d="M18 12h.01"></path>
-                        <path d="M6 16h12"></path>
-                    </svg>
-                </button>
             </div>
         </div>
     );
