@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import { Img } from '@chakra-ui/react';
-import { FaMapMarkerAlt, FaBarcode, FaRegImage } from 'react-icons/fa'; // Font Awesome icons
+import { FaMapMarkerAlt, FaBarcode } from 'react-icons/fa'; // Font Awesome icons
 import gsap from 'gsap';
 
 const SearchHeader = ({ onClose }) => {
@@ -10,12 +10,15 @@ const SearchHeader = ({ onClose }) => {
         '패딩',
         '데님',
         '바라클라바',
-        '스키',
         '하이웨이스트',
         '린넨',
         '베스트',
         '무스탕',
-        'SKI',
+        '스키',
+        '롱코트',
+        '스커트팬츠',
+        '퍼',
+        '탑',
     ];
 
     const productData = [
@@ -89,13 +92,17 @@ const SearchHeader = ({ onClose }) => {
             const items = container.querySelectorAll('button');
             const totalWidth = Array.from(items).reduce((acc, item) => acc + item.offsetWidth + 16, 0);
 
+            // Duplicate content to create an infinite scrolling effect
+            const duplicatedContent = container.innerHTML;
+            container.innerHTML += duplicatedContent;
+
             gsap.to(container, {
                 x: `-${totalWidth}px`,
-                duration: 50, // 슬라이드 속도를 더 느리게
+                duration: 80, // Adjust speed
                 ease: 'linear',
-                repeat: -1,
+                repeat: -1, // Infinite repeat
                 modifiers: {
-                    x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth),
+                    x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth), // Smooth scrolling
                 },
             });
         }
@@ -112,23 +119,12 @@ const SearchHeader = ({ onClose }) => {
                 }}
             >
                 <div className="flex items-center gap-4">
-                    {/* Map Icon */}
-                    <button
-                        onClick={() => console.log('Map clicked!')}
-                        className="text-xl text-black flex items-center justify-center"
-                        aria-label="Map"
-                    >
+                    <button className="text-xl text-black flex items-center justify-center" aria-label="Map">
                         <FaMapMarkerAlt />
                     </button>
-                    {/* Barcode Icon */}
-                    <button
-                        onClick={() => console.log('Barcode clicked!')}
-                        className="text-xl text-black flex items-center justify-center"
-                        aria-label="Barcode"
-                    >
+                    <button className="text-xl text-black flex items-center justify-center" aria-label="Barcode">
                         <FaBarcode />
                     </button>
-                    {/* Image Icon */}
                 </div>
             </div>
 
@@ -158,6 +154,7 @@ const SearchHeader = ({ onClose }) => {
                                     border: '1px solid #ccc',
                                     borderRadius: '0px',
                                 }}
+                                onClick={(e) => e.preventDefault()} // 클릭 시 아무 동작 안함
                             >
                                 {category}
                             </button>
@@ -169,19 +166,14 @@ const SearchHeader = ({ onClose }) => {
                 <div className="flex flex-col items-center py-10">
                     <input
                         type="text"
-                        placeholder="검색..."
-                        className="text-center text-gray-700 text-base border-none outline-none"
+                        placeholder="검색"
+                        className="text-center text-gray-700 text-base border-none outline-none placeholder-gray-400"
                         style={{
                             width: '250px',
                             background: 'transparent',
+                            caretColor: 'black', // 커서 색상
                         }}
                     />
-                    <div
-                        className="border-t border-gray-300 mt-3"
-                        style={{
-                            width: '250px',
-                        }}
-                    ></div>
                 </div>
 
                 {/* Recommended Items */}
@@ -200,14 +192,16 @@ const SearchHeader = ({ onClose }) => {
                                 minHeight: '200px', // 최소 높이를 지정하여 일관성 유지
                             }}
                             onClick={() => {
-                                console.log(`${product.name} clicked`);
+                                console.log(`${product.name} clicked`); // 클릭만 가능
                             }}
                         >
                             <div className="aspect-square relative">
                                 <Img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-sm text-center">{product.name}</h3>
-                            <p className="text-sm text-center">₩{product.price.toLocaleString()}</p>
+                            <div className="px-2 py-1">
+                                <h3 className="text-sm text-left">{product.name}</h3>
+                                <p className="text-sm text-left">₩{product.price.toLocaleString()}</p>
+                            </div>
                         </button>
                     ))}
                 </div>
