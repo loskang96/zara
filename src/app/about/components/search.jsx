@@ -129,13 +129,6 @@ const SearchHeader = ({ onClose }) => {
                         <FaBarcode />
                     </button>
                     {/* Image Icon */}
-                    <button
-                        onClick={() => console.log('Image clicked!')}
-                        className="text-xl text-black flex items-center justify-center"
-                        aria-label="Image"
-                    >
-                        <FaRegImage />
-                    </button>
                 </div>
             </div>
 
