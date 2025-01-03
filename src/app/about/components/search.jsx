@@ -1,10 +1,11 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Img } from '@chakra-ui/react';
-import { FaMapMarkerAlt, FaBarcode } from 'react-icons/fa'; // Font Awesome icons
+import { MapPin, Barcode, Bookmark } from 'lucide-react';
 import gsap from 'gsap';
 
 const SearchHeader = ({ onClose }) => {
+    const [bookmarkedItems, setBookmarkedItems] = useState(new Set());
     const categories = [
         '버킷',
         '패딩',
@@ -86,23 +87,35 @@ const SearchHeader = ({ onClose }) => {
 
     const categoriesRef = useRef(null);
 
+    const toggleBookmark = (productName, e) => {
+        e.stopPropagation();
+        setBookmarkedItems((prev) => {
+            const newBookmarks = new Set(prev);
+            if (newBookmarks.has(productName)) {
+                newBookmarks.delete(productName);
+            } else {
+                newBookmarks.add(productName);
+            }
+            return newBookmarks;
+        });
+    };
+
     useEffect(() => {
         const container = categoriesRef.current;
         if (container) {
             const items = container.querySelectorAll('button');
             const totalWidth = Array.from(items).reduce((acc, item) => acc + item.offsetWidth + 16, 0);
 
-            // Duplicate content to create an infinite scrolling effect
             const duplicatedContent = container.innerHTML;
             container.innerHTML += duplicatedContent;
 
             gsap.to(container, {
                 x: `-${totalWidth}px`,
-                duration: 80, // Adjust speed
+                duration: 80,
                 ease: 'linear',
-                repeat: -1, // Infinite repeat
+                repeat: -1,
                 modifiers: {
-                    x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth), // Smooth scrolling
+                    x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth),
                 },
             });
         }
@@ -112,7 +125,7 @@ const SearchHeader = ({ onClose }) => {
         <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
             {/* Top Bar */}
             <div
-                className="fixed top-4 right-0 w-full z-50 flex justify-end py-2 pr-4" // Top Bar 살짝 내리기
+                className="fixed top-4 right-0 w-full z-50 flex justify-end py-2 pr-4"
                 style={{
                     backgroundColor: 'transparent',
                     border: 'none',
@@ -120,10 +133,10 @@ const SearchHeader = ({ onClose }) => {
             >
                 <div className="flex items-center gap-4">
                     <button className="text-xl text-black flex items-center justify-center" aria-label="Map">
-                        <FaMapMarkerAlt />
+                        <MapPin size={20} />
                     </button>
                     <button className="text-xl text-black flex items-center justify-center" aria-label="Barcode">
-                        <FaBarcode />
+                        <Barcode size={20} />
                     </button>
                 </div>
             </div>
@@ -154,7 +167,7 @@ const SearchHeader = ({ onClose }) => {
                                     border: '1px solid #ccc',
                                     borderRadius: '0px',
                                 }}
-                                onClick={(e) => e.preventDefault()} // 클릭 시 아무 동작 안함
+                                onClick={(e) => e.preventDefault()}
                             >
                                 {category}
                             </button>
@@ -171,7 +184,7 @@ const SearchHeader = ({ onClose }) => {
                         style={{
                             width: '250px',
                             background: 'transparent',
-                            caretColor: 'black', // 커서 색상
+                            caretColor: 'black',
                         }}
                     />
                 </div>
@@ -186,21 +199,35 @@ const SearchHeader = ({ onClose }) => {
                     {productData.map((product, index) => (
                         <button
                             key={index}
-                            className="border p-0 m-0 w-full text-left"
+                            className="border p-0 m-0 w-full text-left relative"
                             style={{
-                                border: '1px solid black', // 검은색 테두리 추가
-                                minHeight: '200px', // 최소 높이를 지정하여 일관성 유지
+                                border: '1px solid black',
+                                minHeight: '200px',
                             }}
                             onClick={() => {
-                                console.log(`${product.name} clicked`); // 클릭만 가능
+                                console.log(`${product.name} clicked`);
                             }}
                         >
                             <div className="aspect-square relative">
                                 <Img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                             </div>
-                            <div className="px-2 py-1">
-                                <h3 className="text-sm text-left">{product.name}</h3>
-                                <p className="text-sm text-left">₩{product.price.toLocaleString()}</p>
+                            <div className="px-2 py-1 flex justify-between items-start">
+                                <div className="flex-1">
+                                    <h3 className="text-sm text-left">{product.name}</h3>
+                                    <p className="text-sm text-left">₩{product.price.toLocaleString()}</p>
+                                </div>
+                                <button
+                                    onClick={(e) => toggleBookmark(product.name, e)}
+                                    className="ml-2 p-1"
+                                    aria-label="북마크"
+                                >
+                                    <Bookmark
+                                        size={20}
+                                        strokeWidth={1}
+                                        className="text-black transition-colors"
+                                        fill={bookmarkedItems.has(product.name) ? 'black' : 'transparent'}
+                                    />
+                                </button>
                             </div>
                         </button>
                     ))}

@@ -1,3 +1,4 @@
+'use client';
 import React, { useCallback, useState } from 'react';
 import { Img } from '@chakra-ui/react';
 
@@ -52,7 +53,7 @@ const ShoppingCart = ({ onClose }) => {
                         className="p-2"
                     >
                         <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path d="M18 6L6 18M6 6l12 12" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M18 6L6 18M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -78,10 +79,10 @@ const ShoppingCart = ({ onClose }) => {
             </div>
 
             {/* Content */}
-            <div className="mt-16 p-4">
+            <div className="mt-20 p-4">
                 {activeTab === 'cart' ? (
                     <>
-                        <div className="text-center py-4">
+                        <div className="text-center py-8">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -90,7 +91,7 @@ const ShoppingCart = ({ onClose }) => {
                                 stroke="currentColor"
                                 className="w-12 h-12 mx-auto text-gray-400"
                             >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 9l-3-3m0 0L10.5 9m3-3V21" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h18M3 3h18M3 3h18" />
                             </svg>
                             <p className="mt-4 text-gray-500">장바구니가 비어 있습니다.</p>
                             <p className="text-gray-400">추가한 상품이 여기에 표시됩니다.</p>
