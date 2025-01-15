@@ -1,5 +1,6 @@
 import React from 'react';
 import { Plus, X } from 'lucide-react';
+import { Img } from '@chakra-ui/react';
 
 const ShoppingBagGrid = () => {
     const baseProducts = [
@@ -102,7 +103,7 @@ const ShoppingBagGrid = () => {
                                 {products.map((product) => (
                                     <div key={product.id} className="relative group">
                                         <div className="aspect-[3/4] bg-gray-100 relative">
-                                            <img
+                                            <Img
                                                 src={product.image}
                                                 alt={product.name}
                                                 className="w-full h-full object-cover"

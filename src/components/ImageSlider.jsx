@@ -4,12 +4,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/globals.scss';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const desktopImages = [
     {
         src: '/images/pattern/main/1.jpg',
-        url: '/page1', // 원하는 경로로 변경해주세요
+        url: '/page1',
     },
     {
         src: '/images/pattern/main/2.jpg',
@@ -32,7 +33,7 @@ const desktopImages = [
 const mobileImages = [
     {
         src: '/images/pattern/main/7.jpg',
-        url: '/page7', // 원하는 경로로 변경해주세요
+        url: '/page7',
     },
     {
         src: '/images/pattern/main/8.jpg',
@@ -54,17 +55,31 @@ const mobileImages = [
 
 export default function ImageSlider() {
     const sliderRef = useRef(null);
-    const [currentImages, setCurrentImages] = useState(desktopImages);
+    const [currentImages, setCurrentImages] = useState(
+        typeof window !== 'undefined' && window.innerWidth >= 1024 ? desktopImages : mobileImages
+    );
+    const timelineRefs = useRef([]);
+    const resizeTimeoutRef = useRef(null);
 
     useEffect(() => {
         const handleResize = () => {
-            setCurrentImages(window.innerWidth >= 1024 ? desktopImages : mobileImages);
+            if (resizeTimeoutRef.current) {
+                clearTimeout(resizeTimeoutRef.current);
+            }
+
+            resizeTimeoutRef.current = setTimeout(() => {
+                setCurrentImages(window.innerWidth >= 1024 ? desktopImages : mobileImages);
+            }, 150);
         };
 
-        handleResize();
-        window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize, { passive: true });
 
-        return () => window.removeEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            if (resizeTimeoutRef.current) {
+                clearTimeout(resizeTimeoutRef.current);
+            }
+        };
     }, []);
 
     useEffect(() => {
@@ -74,41 +89,77 @@ export default function ImageSlider() {
             ctx = gsap.context(() => {
                 const slides = sliderRef.current.querySelectorAll('.slide');
 
+                // Clean up existing ScrollTriggers
                 ScrollTrigger.getAll().forEach((st) => st.kill());
+                timelineRefs.current.forEach((tl) => tl && tl.kill());
+                timelineRefs.current = [];
 
-                slides.forEach((slide) => {
+                slides.forEach((slide, index) => {
                     const timeline = gsap.timeline({
                         scrollTrigger: {
                             trigger: slide,
                             start: 'top bottom',
                             end: 'bottom top',
-                            scrub: true,
+                            scrub: 1,
                             markers: false,
+                            fastScrollEnd: true,
+                            preventOverlaps: true,
+                            overwrite: 'auto',
                         },
                     });
 
-                    timeline.fromTo(slide, { scale: 0.6, opacity: 1 }, { scale: 1, opacity: 1, duration: 1.5 });
+                    timeline
+                        .fromTo(
+                            slide,
+                            {
+                                scale: 0.6,
+                                opacity: 1,
+                                willChange: 'transform',
+                            },
+                            {
+                                scale: 1,
+                                opacity: 1,
+                                duration: 1.5,
+                                ease: 'none',
+                            }
+                        )
+                        .to(slide, {
+                            scale: 0.6,
+                            opacity: 1,
+                            duration: 1.5,
+                            ease: 'none',
+                        });
 
-                    timeline.to(slide, {
-                        scale: 0.6,
-                        opacity: 1,
-                        duration: 1.5,
-                    });
+                    timelineRefs.current[index] = timeline;
                 });
             });
         }
 
-        return () => ctx && ctx.revert();
-    }, []);
+        return () => {
+            if (ctx) {
+                ctx.revert();
+            }
+            timelineRefs.current.forEach((tl) => tl && tl.kill());
+        };
+    }, [currentImages]);
 
     return (
         <section ref={sliderRef} className="w-full">
             {currentImages.map((image, index) => (
-                <a key={index} href={image.url} className="block w-full">
+                <a
+                    key={index}
+                    href={image.url}
+                    className="block w-full"
+                    style={{
+                        transform: 'translateZ(0)',
+                    }}
+                >
                     <div
                         className="slide relative w-full cursor-pointer"
                         style={{
                             height: '100vh',
+                            willChange: 'transform',
+                            backfaceVisibility: 'hidden',
                         }}
                     >
                         <div
@@ -116,9 +167,11 @@ export default function ImageSlider() {
                             style={{
                                 backgroundImage: `url(${image.src})`,
                                 backgroundSize: 'cover',
-                                backgroundPosition: 'center',
+                                backgroundPosition: window.innerWidth >= 1024 ? 'center center' : '100% 0%',
                                 backgroundRepeat: 'no-repeat',
-                                transform: 'scale(1.1)',
+                                transform: 'scale(1.1) translateZ(0)',
+                                willChange: 'transform',
+                                backfaceVisibility: 'hidden',
                             }}
                         />
                     </div>
