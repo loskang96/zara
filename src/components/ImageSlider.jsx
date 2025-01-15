@@ -98,8 +98,8 @@ export default function ImageSlider() {
                     const timeline = gsap.timeline({
                         scrollTrigger: {
                             trigger: slide,
-                            start: 'top bottom',
-                            end: 'bottom top',
+                            start: 'bottom 80%', // 하단에서 20% 위
+                            end: 'top 20%', // 상단에서 20% 아래
                             scrub: 1,
                             markers: false,
                             fastScrollEnd: true,
@@ -112,22 +112,22 @@ export default function ImageSlider() {
                         .fromTo(
                             slide,
                             {
-                                scale: 0.6,
+                                scale: 1,
                                 opacity: 1,
                                 willChange: 'transform',
                             },
                             {
                                 scale: 1,
                                 opacity: 1,
-                                duration: 1.5,
+                                duration: 2,
                                 ease: 'none',
                             }
                         )
                         .to(slide, {
                             scale: 0.6,
                             opacity: 1,
-                            duration: 1.5,
-                            ease: 'none',
+                            duration: 1,
+                            ease: 'power1.inOut',
                         });
 
                     timelineRefs.current[index] = timeline;
@@ -167,7 +167,7 @@ export default function ImageSlider() {
                             style={{
                                 backgroundImage: `url(${image.src})`,
                                 backgroundSize: 'cover',
-                                backgroundPosition: window.innerWidth >= 1024 ? 'center center' : '100% 0%',
+                                backgroundPosition: window.innerWidth >= 768 ? 'center center' : '100% 0%',
                                 backgroundRepeat: 'no-repeat',
                                 transform: 'scale(1.1) translateZ(0)',
                                 willChange: 'transform',
