@@ -30,7 +30,13 @@
         "react-router-dom": "^7.1.0",
         "sass": "^1.81.0",
         "swiper": "^11.1.15",
-        "uninstall": "^0.0.0"
+        "uninstall": "^0.0.0",
+        "@babel/core": "^7.0.0",
+        "@babel/eslint-parser": "^7.0.0",
+        "@babel/preset-react": "^7.0.0",
+        "eslint": "^8.0.0",
+        "eslint-config-next": "^13.0.0"
+        
     },
     "devDependencies": {
         "eslint": "^8",

@@ -1,15 +1,18 @@
-// app/page.js
 'use client';
 
+import dynamic from 'next/dynamic';
 import Header from '@/components/layout/header/Header';
-import ImageSlider from '@/components/ImageSlider';
 import Footer from '@/components/layout/Footer';
+
+const ImageSlider = dynamic(() => import('@/components/ImageSlider'), {
+    ssr: false,
+});
 
 export default function Page() {
     return (
-        <div className="relative w-full">
+        <div className="flex flex-col min-h-screen">
             <Header />
-            <main>
+            <main className="flex-grow">
                 <ImageSlider />
             </main>
             <Footer />
