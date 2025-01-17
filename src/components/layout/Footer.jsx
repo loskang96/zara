@@ -1,35 +1,11 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Search, User, ShoppingBag, Home } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Footer({ onSearchOpen }) {
-    const footerRef = useRef(null);
-
-    useEffect(() => {
-        gsap.fromTo(
-            footerRef.current,
-            { opacity: 0, y: 50 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 1.5,
-                scrollTrigger: {
-                    trigger: footerRef.current,
-                    start: 'top bottom',
-                    end: 'center center',
-                    scrub: true,
-                },
-            }
-        );
-    }, []);
-
     return (
-        <footer ref={footerRef} className="relative w-full bg-gray-100">
+        <footer className="relative w-full bg-gray-100">
             {/* 뉴스레터 섹션 */}
             <div className="h-screen flex flex-col items-center justify-center text-center">
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8">뉴스레터에 가입하세요</h2>
@@ -54,13 +30,10 @@ export default function Footer({ onSearchOpen }) {
             <div
                 className="fixed bottom-0 left-0 w-full bg-black z-50"
                 style={{
-                    height: '64px', // 네비게이션 높이 고정
-                    display: 'flex',
-                    alignItems: 'center',
-                    boxSizing: 'border-box',
+                    height: '64px',
                 }}
             >
-                <div className="flex items-center justify-between w-full px-12">
+                <div className="flex items-center justify-between w-full h-full px-12">
                     <button
                         className="flex items-center justify-center w-6"
                         onClick={() => (window.location.href = '/')}
